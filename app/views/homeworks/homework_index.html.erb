@@ -1,0 +1,30 @@
+<h1>宿題リスト</h1>
+<%= link_to "新しい宿題を追加", new_homework_path, class: "btn btn-primary" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>タイトル</th>
+      <th>科目</th>
+      <th>期限</th>
+      <th>優先度</th>
+      <th>ステータス</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @homeworks.each do |homework| %>
+      <tr>
+        <td><%= homework.title %></td>
+        <td><%= homework.subject %></td>
+        <td><%= homework.due_date %></td>
+        <td><%= %w[低 中 高][homework.priority] %></td>
+        <td><%= %w[未着手 進行中 完了][homework.status] %></td>
+        <td>
+          <%= link_to "編集", edit_homework_path(homework), class: "btn btn-warning" %>
+          <%= link_to "削除", homework_path(homework), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
