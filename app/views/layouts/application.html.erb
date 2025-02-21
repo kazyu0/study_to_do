@@ -1,19 +1,40 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>StudyToDo</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+<html lang="ja">
+<head>
+  <title>宿題管理アプリ</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+</head>
+<body class="bg-gray-100">
+  <!-- ヘッダー -->
+  <header class="bg-blue-500 text-white p-4">
+    <div class="container mx-auto flex justify-between">
+      <h1 class="text-xl font-bold">宿題管理アプリ</h1>
+      <nav>
+        <ul class="flex space-x-4">
+          <li><%= link_to "ホーム", root_path, class: "hover:underline" %></li>
+          <li><%= link_to "宿題一覧", homeworks_path, class: "hover:underline" %></li>
+          <li><%= link_to "新規登録", new_homework_path, class: "hover:underline" %></li>
+          <% if user_signed_in? %>
+            <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "hover:underline" %></li>
+          <% else %>
+            <li><%= link_to "ログイン", new_user_session_path, class: "hover:underline" %></li>
+          <% end %>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
+  <!-- メインコンテンツ -->
+  <main class="container mx-auto p-6">
+    <%= yield %>
+  </main>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
-  </body>
+  <!-- フッター -->
+  <footer class="bg-gray-300 text-center p-4 mt-6">
+    <p>© 2025 宿題管理アプリ</p>
+  </footer>
+</body>
 </html>
